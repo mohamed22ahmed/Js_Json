@@ -1,0 +1,81 @@
+<html lang="en">
+
+<head>
+    <script type="application/json" src="quizQuestions.json"></script>
+</head>
+<style>
+    button {
+        margin-bottom: 10px;
+    }
+    
+    #quizDiv {
+        margin-left: 10px;
+        background: rgb(0, 51, 102);
+        padding: 10px 20px 10px 20px;
+        width: 500px;
+        border-radius: 20px;
+    }
+    
+    .quesDiv {
+        margin-left: 10px;
+        background: #d2def2;
+        padding: 10px;
+        width: 250px;
+        border-radius: 20px;
+        text-align: left;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+
+<body>
+
+    <h1>My Quiz</h1>
+    <button type="submit" id="SQuiz">Start Quiz</button>
+    <div id="quizDiv"></div>
+
+
+    <script>
+        function readTextFile(file, callback) {
+            var rawFile = new XMLHttpRequest();
+            rawFile.overrideMimeType("application/json");
+            rawFile.open("GET", file, true);
+            rawFile.onreadystatechange = function() {
+                if (rawFile.readyState === 4 && rawFile.status == "200") {
+                    callback(rawFile.responseText);
+                }
+            }
+            rawFile.send(null);
+        }
+
+        //usage:
+        readTextFile("http://localhost/task/quizQuestions.json", function(text) {
+            var data = JSON.parse(text);
+            var ques1 = data["questions"][0]
+            var ques2 = data["questions"][1]
+
+            console.log(ques1)
+            console.log(ques2)
+
+            var question1 = "<div class='quesDiv'><h3>Question 1</h3>";
+            question1 += "<b>" + ques1['question'] + "</b><br>"
+            question1 += "<button onclick='checkAnswer()'>" + ques1['choices'][0]['answer'] + "</button><br>"
+            question1 += "<button onclick='checkAnswer()'>" + ques1['choices'][1]['answer'] + "</button><br>"
+            question1 += "<button onclick='checkAnswer()'>" + ques1['choices'][2]['answer'] + "</button><br>"
+            question1 += "<button onclick='checkAnswer()'>" + ques1['choices'][3]['answer'] + "</button><br>"
+            question1 += "</div><div class='quesDiv'><h3>Question 2</h3>"
+
+            question1 += "<b>ques2['question']</b>"
+            question1 += "<b>" + ques1['question'] + "</b><br>"
+            question1 += "<button onclick='checkAnswer()'>" + ques2['choices'][0]['answer'] + "</button><br>"
+            question1 += "<button onclick='checkAnswer()'>" + ques2['choices'][1]['answer'] + "</button><br>"
+            question1 += "<button onclick='checkAnswer()'>" + ques2['choices'][2]['answer'] + "</button><br>"
+            question1 += "<button onclick='checkAnswer()'>" + ques2['choices'][3]['answer'] + "</button><br>"
+            question1 += "</div>"
+
+            document.getElementById('quizDiv').innerHTML = question1
+        });
+    </script>
+</body>
+
+</html>
